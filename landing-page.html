@@ -1,0 +1,504 @@
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nubd Digital — Where Quantum Thinking Meets Digital Action</title>
+<meta name="description" content="Nubd Digital builds apps and tools powered by quantum physics and AI. Explore Quantum Decision — our flagship decision-making app.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="icon" href="logo-120.png" type="image/png">
+
+<style>
+  :root {
+    --primary: #6B21A8;
+    --secondary: #3B82F6;
+    --accent: #06B6D4;
+    --dark: #0F0F1A;
+    --light: #F8FAFC;
+    --muted: #94A3B8;
+    --panel: #171726;
+    --border: #2A2440;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--dark);
+    color: var(--light);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    line-height: 1.6;
+    overflow-x: hidden;
+    position: relative;
+  }
+
+  a { color: inherit; text-decoration: none; }
+
+  /* Particle background */
+  #particle-field {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    overflow: hidden;
+  }
+  .particle {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: #A855F7;
+    border-radius: 50%;
+    opacity: 0.3;
+    animation: float 20s infinite linear;
+  }
+  @keyframes float {
+    0% { transform: translateY(0) translateX(0); opacity: 0.3; }
+    50% { opacity: 0.6; }
+    100% { transform: translateY(-100vh) translateX(50px); opacity: 0; }
+  }
+
+  .bg-glow {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    background:
+      radial-gradient(600px circle at 15% 20%, rgba(107,33,168,0.25), transparent 60%),
+      radial-gradient(600px circle at 85% 15%, rgba(59,130,246,0.18), transparent 60%),
+      radial-gradient(700px circle at 50% 95%, rgba(6,182,212,0.15), transparent 60%);
+    pointer-events: none;
+  }
+
+  .container {
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 0 24px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Nav */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    backdrop-filter: blur(10px);
+    background: rgba(15,15,26,0.75);
+    border-bottom: 1px solid var(--border);
+  }
+  nav .container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 76px;
+  }
+  .brand { display: flex; align-items: center; gap: 12px; }
+  .brand-name { font-weight: 700; font-size: 1.2rem; }
+  .brand-name .light { font-weight: 300; color: var(--muted); }
+
+  nav ul {
+    list-style: none;
+    display: flex;
+    gap: 32px;
+  }
+  nav ul a {
+    color: var(--muted);
+    font-size: 0.92rem;
+    font-weight: 500;
+    transition: color 0.2s ease;
+  }
+  nav ul a:hover { color: var(--light); }
+  @media (max-width: 640px) { nav ul { display: none; } }
+
+  /* Orbit icon (rotating) */
+  .orbit-icon { position: relative; width: 44px; height: 44px; }
+  .orbit-icon .orbit {
+    position: absolute;
+    inset: 0;
+    animation: rotate 20s linear infinite;
+  }
+  @keyframes rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  /* Buttons */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 13px 26px;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    cursor: pointer;
+    border: 1px solid transparent;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+  }
+  .btn:hover { transform: translateY(-2px); }
+  .btn-primary {
+    background: linear-gradient(90deg, var(--primary), var(--secondary));
+    color: #fff;
+    animation: pulse 3s ease-in-out infinite;
+  }
+  .btn-primary:hover { box-shadow: 0 12px 32px rgba(59,130,246,0.4); }
+  @keyframes pulse {
+    0%, 100% { box-shadow: 0 0 20px rgba(107,33,168,0.4); }
+    50% { box-shadow: 0 0 40px rgba(107,33,168,0.7); }
+  }
+  .btn-ghost {
+    background: transparent;
+    color: var(--light);
+    border-color: var(--border);
+  }
+  .btn-ghost:hover { border-color: var(--accent); background: rgba(6,182,212,0.08); }
+
+  /* Hero */
+  .hero { padding: 120px 0 100px; text-align: center; }
+  .eyebrow {
+    display: inline-block;
+    font-size: 0.78rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    border: 1px solid rgba(6,182,212,0.35);
+    background: rgba(6,182,212,0.08);
+    padding: 6px 16px;
+    border-radius: 999px;
+    margin-bottom: 28px;
+  }
+  .hero h1 {
+    font-size: clamp(2.2rem, 5.5vw, 4rem);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    margin: 0 0 24px;
+  }
+  .hero h1 .grad {
+    background: linear-gradient(90deg, #A855F7, var(--secondary), var(--accent));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .hero p.lead {
+    max-width: 620px;
+    margin: 0 auto 40px;
+    color: var(--muted);
+    font-size: 1.1rem;
+    font-weight: 400;
+  }
+  .hero .cta-row { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+
+  .hero-mark { width: 200px; height: 200px; margin: 64px auto 0; }
+
+  /* Fade-in on scroll */
+  .fade-in { opacity: 0; transform: translateY(30px); transition: all 0.6s ease; }
+  .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+  section { padding: 100px 0; position: relative; z-index: 1; }
+  .section-head { text-align: center; max-width: 640px; margin: 0 auto 56px; }
+  .section-head .kicker {
+    color: var(--accent);
+    font-size: 0.8rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    font-weight: 700;
+  }
+  .section-head h2 {
+    font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+    letter-spacing: -0.02em;
+    margin: 12px 0 14px;
+    font-weight: 700;
+  }
+  .section-head p { color: var(--muted); font-weight: 400; }
+
+  /* About */
+  .about-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  @media (max-width: 800px) { .about-grid { grid-template-columns: 1fr; } }
+  .card {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 28px;
+    transition: transform 0.25s ease, border-color 0.25s ease;
+  }
+  .card:hover { transform: translateY(-6px); border-color: rgba(6,182,212,0.4); }
+  .card .icon {
+    width: 44px; height: 44px; border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.3rem; margin-bottom: 18px;
+  }
+  .card h3 { margin: 0 0 10px; font-size: 1.05rem; font-weight: 600; }
+  .card p { color: var(--muted); font-size: 0.92rem; font-weight: 400; }
+  .icon-purple { background: rgba(107,33,168,0.25); color: #C89CF2; }
+  .icon-blue { background: rgba(59,130,246,0.2); color: #93BCFB; }
+  .icon-cyan { background: rgba(6,182,212,0.2); color: #6DE0F2; }
+
+  /* Products */
+  .products-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 28px; }
+  @media (max-width: 800px) { .products-grid { grid-template-columns: 1fr; } }
+  .product-card {
+    position: relative;
+    background: linear-gradient(160deg, var(--panel), #101020);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 36px;
+    overflow: hidden;
+  }
+  .badge {
+    display: inline-block;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 5px 12px;
+    border-radius: 999px;
+    margin-bottom: 18px;
+  }
+  .badge-live { background: rgba(6,182,212,0.18); color: var(--accent); border: 1px solid rgba(6,182,212,0.4); }
+  .badge-soon { background: rgba(148,163,184,0.12); color: #94A3B8; border: 1px solid rgba(148,163,184,0.3); }
+  .product-card h3 { font-size: 1.4rem; margin: 0 0 12px; font-weight: 700; letter-spacing: -0.01em; }
+  .product-card p { color: var(--muted); margin: 0 0 24px; font-weight: 400; }
+  .product-card ul { list-style: none; margin: 0 0 28px; display: grid; gap: 10px; }
+  .product-card li { display: flex; align-items: center; gap: 10px; font-size: 0.9rem; color: var(--muted); }
+  .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); flex-shrink: 0; }
+
+  /* Newsletter */
+  .newsletter {
+    background: linear-gradient(120deg, rgba(107,33,168,0.25), rgba(6,182,212,0.15));
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    padding: 64px 40px;
+    text-align: center;
+  }
+  .newsletter h2 { margin: 0 0 12px; font-size: clamp(1.5rem, 3vw, 2.1rem); font-weight: 700; letter-spacing: -0.02em; }
+  .newsletter p { color: var(--muted); margin: 0 0 32px; font-weight: 400; }
+  .signup-form { display: flex; gap: 12px; max-width: 440px; margin: 0 auto; flex-wrap: wrap; justify-content: center; }
+  .signup-form input {
+    flex: 1; min-width: 220px; padding: 14px 18px; border-radius: 10px;
+    border: 1px solid var(--border); background: rgba(15,15,26,0.6);
+    color: var(--light); font-size: 0.95rem; font-family: inherit; outline: none;
+    transition: border-color 0.2s ease;
+  }
+  .signup-form input:focus { border-color: var(--accent); }
+  .signup-note { margin-top: 16px; font-size: 0.8rem; color: #8B87A3; }
+  .signup-success { color: var(--accent); font-size: 0.9rem; margin-top: 16px; display: none; }
+  .signup-success.show { display: block; }
+
+  /* Footer */
+  footer { border-top: 1px solid var(--border); padding: 56px 0 32px; position: relative; z-index: 1; }
+  .footer-top {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    flex-wrap: wrap; gap: 32px; margin-bottom: 40px;
+  }
+  .footer-brand p { color: var(--muted); max-width: 320px; font-size: 0.9rem; margin-top: 12px; font-weight: 400; }
+  .social-row { display: flex; gap: 12px; }
+  .social-row a {
+    width: 40px; height: 40px; border-radius: 10px; border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--muted); transition: all 0.2s ease;
+  }
+  .social-row a:hover { color: var(--light); border-color: var(--accent); background: rgba(6,182,212,0.1); transform: translateY(-3px); }
+  .footer-bottom {
+    display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px;
+    padding-top: 24px; border-top: 1px solid var(--border); color: #8B87A3; font-size: 0.82rem;
+  }
+</style>
+
+<div class="bg-glow"></div>
+<div id="particle-field"></div>
+
+<nav>
+  <div class="container">
+    <div class="brand">
+      <div class="orbit-icon">
+        <svg viewBox="0 0 400 400" width="44" height="44">
+          <circle cx="200" cy="200" r="196" fill="#0F0F1A" stroke="#6B21A8" stroke-width="6"/>
+          <g class="orbit" fill="none" stroke-linecap="round">
+            <ellipse cx="200" cy="200" rx="150" ry="60" stroke="#7C3AED" stroke-width="6" transform="rotate(45 200 200)"/>
+            <ellipse cx="200" cy="200" rx="150" ry="60" stroke="#06B6D4" stroke-width="6" transform="rotate(-45 200 200)"/>
+            <ellipse cx="200" cy="200" rx="150" ry="60" stroke="#3B82F6" stroke-width="4" opacity="0.5"/>
+          </g>
+          <text x="200" y="245" text-anchor="middle" font-family="Inter, Helvetica, Arial, sans-serif" font-weight="900" font-size="140" fill="#fff">N</text>
+        </svg>
+      </div>
+      <span class="brand-name">Nubd<span class="light"> Digital</span></span>
+    </div>
+    <ul>
+      <li><a href="#about">About</a></li>
+      <li><a href="#products">Products</a></li>
+      <li><a href="#newsletter">Newsletter</a></li>
+    </ul>
+    <a href="#newsletter" class="btn btn-primary" style="padding:10px 20px;font-size:0.85rem;">Get Started</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="container">
+    <span class="eyebrow fade-in">Quantum Physics × Artificial Intelligence</span>
+    <h1 class="fade-in">Nubd Digital — Where <span class="grad">Quantum Thinking</span><br>Meets Digital Action</h1>
+    <p class="lead fade-in">We build apps and tools powered by quantum physics and AI — turning uncertainty into decisive, measurable outcomes.</p>
+    <div class="cta-row fade-in">
+      <a href="#products" class="btn btn-primary">Explore Products</a>
+      <a href="#about" class="btn btn-ghost">Learn More</a>
+    </div>
+
+    <svg class="hero-mark fade-in" viewBox="0 0 400 400">
+      <circle cx="200" cy="200" r="196" fill="#0F0F1A" stroke="#6B21A8" stroke-width="4"/>
+      <g class="orbit" fill="none">
+        <ellipse cx="200" cy="200" rx="150" ry="60" stroke="#7C3AED" stroke-width="3" transform="rotate(45 200 200)"/>
+        <ellipse cx="200" cy="200" rx="150" ry="60" stroke="#06B6D4" stroke-width="3" transform="rotate(-45 200 200)"/>
+        <ellipse cx="200" cy="200" rx="150" ry="60" stroke="#3B82F6" stroke-width="2" opacity="0.5"/>
+      </g>
+      <circle cx="200" cy="130" r="12" fill="#3B82F6"/>
+      <circle cx="295" cy="275" r="12" fill="#06B6D4"/>
+      <circle cx="105" cy="275" r="12" fill="#6B21A8"/>
+      <circle cx="200" cy="130" r="5" fill="#fff"/>
+      <circle cx="295" cy="275" r="5" fill="#fff"/>
+      <circle cx="105" cy="275" r="5" fill="#fff"/>
+      <text x="200" y="245" text-anchor="middle" font-family="Inter, Helvetica, Arial, sans-serif" font-weight="900" font-size="140" fill="#fff">N</text>
+    </svg>
+  </div>
+</header>
+
+<section id="about">
+  <div class="container">
+    <div class="section-head fade-in">
+      <span class="kicker">About Us</span>
+      <h2>Engineering certainty from complexity</h2>
+      <p>Nubd Digital is a small, focused studio building AI-native products. We borrow principles from quantum physics — superposition, entanglement, probability — as a mental model for decision-making under uncertainty, then ship them as practical software.</p>
+    </div>
+    <div class="about-grid">
+      <div class="card fade-in">
+        <div class="icon icon-purple">⚛</div>
+        <h3>Quantum-inspired thinking</h3>
+        <p>We model ambiguous problems the way physicists model particles — as ranges of probable outcomes, not fixed answers.</p>
+      </div>
+      <div class="card fade-in">
+        <div class="icon icon-blue">✦</div>
+        <h3>AI at the core</h3>
+        <p>Every product is built AI-first, using modern language and reasoning models as the primary interface, not an add-on.</p>
+      </div>
+      <div class="card fade-in">
+        <div class="icon icon-cyan">◆</div>
+        <h3>Digital-first delivery</h3>
+        <p>Lean, fast-shipping digital products designed to prove value quickly and scale without heavy overhead.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="products">
+  <div class="container">
+    <div class="section-head fade-in">
+      <span class="kicker">Our Products</span>
+      <h2>Built for clarity under uncertainty</h2>
+      <p>A focused suite of tools that apply quantum-inspired reasoning to everyday digital decisions.</p>
+    </div>
+    <div class="products-grid">
+      <div class="product-card fade-in">
+        <span class="badge badge-live">Live</span>
+        <h3>Quantum Decision</h3>
+        <p>Our flagship AI decision-making app. It models choices as probability fields instead of single answers, helping teams see the full range of outcomes before committing.</p>
+        <ul>
+          <li><span class="dot"></span> Scenario probability modeling</li>
+          <li><span class="dot"></span> AI-generated risk narratives</li>
+          <li><span class="dot"></span> Real-time collaborative inputs</li>
+        </ul>
+        <a href="#newsletter" class="btn btn-primary">Get Early Access</a>
+      </div>
+      <div class="product-card fade-in">
+        <span class="badge badge-soon">Coming Soon</span>
+        <h3>Next Product</h3>
+        <p>Our second product is in the lab. It extends quantum-inspired reasoning into a new domain — details drop for newsletter subscribers first.</p>
+        <ul>
+          <li><span class="dot"></span> Announced to subscribers first</li>
+          <li><span class="dot"></span> Built on the same AI core</li>
+          <li><span class="dot"></span> Early access for waitlist members</li>
+        </ul>
+        <a href="#newsletter" class="btn btn-ghost">Join the Waitlist</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="newsletter">
+  <div class="container">
+    <div class="newsletter fade-in">
+      <h2>Stay ahead of the curve</h2>
+      <p>Get product updates, quantum-AI insights, and early access — straight to your inbox.</p>
+      <form class="signup-form" id="signupForm">
+        <input type="email" placeholder="you@email.com" required aria-label="Email address">
+        <button type="submit" class="btn btn-primary">Subscribe</button>
+      </form>
+      <div class="signup-success" id="signupSuccess">You're in — welcome to Nubd Digital.</div>
+      <p class="signup-note">No spam. Unsubscribe anytime.</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="brand">
+          <div class="orbit-icon">
+            <svg viewBox="0 0 400 400" width="36" height="36">
+              <circle cx="200" cy="200" r="196" fill="#0F0F1A" stroke="#6B21A8" stroke-width="6"/>
+              <g class="orbit" fill="none">
+                <ellipse cx="200" cy="200" rx="150" ry="60" stroke="#7C3AED" stroke-width="6" transform="rotate(45 200 200)"/>
+                <ellipse cx="200" cy="200" rx="150" ry="60" stroke="#06B6D4" stroke-width="6" transform="rotate(-45 200 200)"/>
+                <ellipse cx="200" cy="200" rx="150" ry="60" stroke="#3B82F6" stroke-width="4" opacity="0.5"/>
+              </g>
+              <text x="200" y="245" text-anchor="middle" font-family="Inter, Helvetica, Arial, sans-serif" font-weight="900" font-size="140" fill="#fff">N</text>
+            </svg>
+          </div>
+          <span class="brand-name">Nubd<span class="light"> Digital</span></span>
+        </div>
+        <p>Where quantum thinking meets digital action.</p>
+      </div>
+      <div class="social-row">
+        <a href="#" aria-label="Twitter / X">𝕏</a>
+        <a href="#" aria-label="LinkedIn">in</a>
+        <a href="#" aria-label="GitHub">GH</a>
+        <a href="#" aria-label="YouTube">▶</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Nubd Digital. All rights reserved.</span>
+      <span>Privacy · Terms</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Floating particle background
+  const field = document.getElementById('particle-field');
+  const PARTICLE_COUNT = 40;
+  for (let i = 0; i < PARTICLE_COUNT; i++) {
+    const p = document.createElement('div');
+    p.className = 'particle';
+    p.style.left = Math.random() * 100 + 'vw';
+    p.style.top = Math.random() * 100 + 'vh';
+    p.style.animationDelay = (Math.random() * 20) + 's';
+    p.style.animationDuration = (15 + Math.random() * 10) + 's';
+    field.appendChild(p);
+  }
+
+  // Scroll-triggered fade-ins
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.2 });
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+  // Newsletter signup
+  const form = document.getElementById('signupForm');
+  const success = document.getElementById('signupSuccess');
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    success.classList.add('show');
+    form.reset();
+  });
+</script>

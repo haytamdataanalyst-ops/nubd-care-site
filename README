@@ -1,0 +1,47 @@
+# Nubd Digital — Quantum Decision Landing Page (v4.0)
+
+Single-file marketing landing page for **Quantum Decision** by **Nubd Digital**.
+
+## Files
+
+- `index.html` — the entire page. Embedded CSS + JS, no external image assets. All app visuals (phone mockup, Decision Superposition app screen) are hand-built CSS/SVG, not screenshots.
+- `README.md` — this file.
+
+## Tech
+
+- Plain HTML/CSS/JS, no build step, no dependencies.
+- Google Fonts (Inter) loaded via CDN link — the only external network request besides the Meta Pixel.
+- Meta Pixel (ID `1788443058834444`, matches the existing brand kit) fires `PageView` on load and `InitiateCheckout` on every CTA click.
+
+## Structure
+
+1. Nav — glassmorphism, fixed top, logo + How it Works / Pricing + Start Free CTA
+2. Hero — headline, stats, dual CTA, animated phone mockup with orbit rings
+3. How It Works — 3-step process
+4. Features — 6-card grid + large Decision Superposition app mockup (sidebar nav + 5 scenario cards)
+5. Pricing — Free vs Premium ($29 one-time)
+6. Final CTA — gradient callout panel
+7. Footer — logo, links, social icons
+
+## Brand
+
+| Token | Value |
+|---|---|
+| Primary | `#6B21A8` |
+| Secondary | `#3B82F6` |
+| Accent | `#06B6D4` |
+| Dark | `#0F0F1A` |
+| Light | `#F8FAFC` |
+| Muted | `#94A3B8` |
+
+All CTAs link to `https://app.nubd-care.com`.
+
+## Local preview
+
+```bash
+open index.html
+```
+
+## Deploy
+
+Push this folder to a GitHub repo and enable GitHub Pages, pointed at the `nubd-care.com` domain (CNAME), to match the CTA links.
